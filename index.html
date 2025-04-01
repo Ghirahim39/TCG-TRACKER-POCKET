@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Collection Tracker</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        
+        /* Sticky Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: #1e1e1e;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        select {
+            padding: 5px;
+            font-size: 16px;
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+        img {
+            width: 50px;
+            height: auto;
+        }
+        
+        .collect-btn {
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Collection Selector -->
+    <div class="header">
+        <label for="collection">Select Collection:</label>
+        <select id="collection" onchange="filterCollection()">
+            <option value="jirachi">Jirachi</option>
+            <option value="hydreigon">Hydreigon</option>
+            <option value="wotc-promos">WOTC Promos</option>
+        </select>
+    </div>
+    
+    <!-- Card Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Lang</th>
+                <th>Name</th>
+                <th>#</th>
+                <th>Expansion</th>
+                <th>Price</th>
+                <th>Variation</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="card-list">
+            <!-- Example Row -->
+            <tr data-collection="jirachi">
+                <td><img src="example.jpg" alt="Card Image"></td>
+                <td><img src="english.png" alt="Lang"></td>
+                <td>Jirachi EX</td>
+                <td>XY67</td>
+                <td>XY Promos</td>
+                <td>$10.00</td>
+                <td>Holo</td>
+                <td><button class="collect-btn" onclick="collectCard(this)">Collected</button></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script>
+        function filterCollection() {
+            let selected = document.getElementById("collection").value;
+            let rows = document.querySelectorAll("tbody tr");
+            
+            rows.forEach(row => {
+                row.style.display = row.getAttribute("data-collection") === selected ? "table-row" : "none";
+            });
+        }
+        
+        function collectCard(button) {
+            if (confirm("Are you sure you want to mark this card as collected?")) {
+                button.closest("tr").remove();
+            }
+        }
+    </script>
+</body>
+</html>
